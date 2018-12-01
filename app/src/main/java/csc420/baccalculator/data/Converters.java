@@ -29,4 +29,21 @@ public class Converters {
     public String toGenderString(User.Gender gender) {
         return gender == null ? null : gender.name();
     }
+
+    @TypeConverter
+    public Drink.DrinkType fromDrinkTypeString(String value) {
+        for (Drink.DrinkType drinkType : Drink.DrinkType.values()) {
+            if (drinkType.name().equals(value)) {
+                return drinkType;
+            }
+        }
+        return null;
+    }
+
+    @TypeConverter
+    public String toDrinkTypeString(Drink.DrinkType drinkType) {
+        return drinkType == null ? null : drinkType.name();
+    }
+
+
 }
