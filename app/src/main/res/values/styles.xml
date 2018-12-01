@@ -8,4 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MainTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">#353839</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="ToolbarTheme">
+        <item name="android:colorPrimary">#343434</item>
+        <item name="android:background">#343434</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColorSecondary">#FFFFFF</item>
+    </style>
+
 </resources>
