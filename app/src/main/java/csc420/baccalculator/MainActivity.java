@@ -34,26 +34,30 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
         switch (item.getItemId()) {
             case R.id.menu_home:
-                // TODO: Switch to home fragment
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
                 HomeFragment hf = new HomeFragment();
                 ft.replace(R.id.frag_holder, hf);
                 ft.commit();
                 return true;
             case R.id.menu_profile:
                 // TODO: Switch to profile fragment
+                ft.commit();
                 return true;
             case R.id.menu_contacts:
-                // TODO: Switch to contact fragment
+                ContactsFragment cf = new ContactsFragment();
+                ft.replace(R.id.frag_holder, cf);
+                ft.commit();
                 return true;
             case R.id.menu_settings:
                 // TODO: Switch to settings fragment
+                ft.commit();
                 return true;
             default:
                 // Not a recognized id
+                ft.commit();
                 return false;
         }
     }
