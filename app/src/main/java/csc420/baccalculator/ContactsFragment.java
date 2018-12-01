@@ -4,6 +4,7 @@ package csc420.baccalculator;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,11 +34,20 @@ public class ContactsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // handle recycler view list
         RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         ContactsAdapter contactsAdapter = new ContactsAdapter();
         recyclerView.setAdapter(contactsAdapter);
+        // handle button
+        FloatingActionButton fab = getView().findViewById(R.id.add_contact_button);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Switch to fragment for adding contact
+            }
+        });
     }
 }
