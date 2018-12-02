@@ -10,6 +10,13 @@ import java.util.Date;
 public class User {
     public enum Gender { MALE, FEMALE }
 
+    public User(String name, Date birthday, Gender gender) {
+        this.uid = 0;
+        this.name = name;
+        this.birthday = birthday;
+        this.gender = gender;
+    }
+
     @PrimaryKey(autoGenerate = true)
     public int uid;
 
