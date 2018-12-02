@@ -10,7 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import csc420.baccalculator.data.SettingsFragment;
 
-public class MainActivity extends AppCompatActivity implements SettingsFragment.OnFragmentSelectionListener {
+public class MainActivity extends AppCompatActivity implements SettingsFragment.OnFragmentSelectionListener,
+                                                               NewUserFragment.OnFragmentSelectionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
         super.onAttachFragment(fragment);
         if (fragment instanceof SettingsFragment) {
             ((SettingsFragment) fragment).setOnFragmentSelectionListener(this);
+        } else if (fragment instanceof NewUserFragment) {
+            ((NewUserFragment) fragment).setOnFragmentSelectionListener(this);
         }
     }
 
@@ -81,6 +84,14 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.frag_holder, fragment);
         ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    @Override
+    public void onFragmentSelectionNoStack(Fragment fragment) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.frag_holder, fragment);
         ft.commit();
     }
 }

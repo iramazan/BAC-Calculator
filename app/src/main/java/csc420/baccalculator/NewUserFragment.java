@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -31,6 +28,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class NewUserFragment extends Fragment {
 
+    OnFragmentSelectionListener activityCallback;
 
     public NewUserFragment() {
         // Required empty public constructor
@@ -76,7 +74,7 @@ public class NewUserFragment extends Fragment {
             EditText editName = getView().findViewById(R.id.edit_name);
             String userName = editName.getText().toString();
             SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy", Locale.US);
-            Date dob = null;
+            Date dob;
             try {
                 dob = formatter.parse(editDob.getText().toString());
             } catch (ParseException e) {
@@ -87,6 +85,15 @@ public class NewUserFragment extends Fragment {
             User user = new User(userName, dob, gender);
             ExecutorService executor = Executors.newSingleThreadExecutor();
             executor.execute(() -> db.userDao().insert(user));
+            activityCallback.onFragmentSelectionNoStack(new SuccessFragment());
         });
+    }
+
+    public void setOnFragmentSelectionListener(OnFragmentSelectionListener activity) {
+        activityCallback = activity;
+    }
+
+    public interface OnFragmentSelectionListener {
+        void onFragmentSelectionNoStack(Fragment fragment);
     }
 }
