@@ -9,8 +9,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -38,6 +40,8 @@ public class NewUserFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Selecting date of birth
         final Calendar calendar = Calendar.getInstance();
         final EditText editText = getView().findViewById(R.id.edit_dob);
         final DatePickerDialog.OnDateSetListener dobPicker = new DatePickerDialog.OnDateSetListener() {
@@ -57,5 +61,12 @@ public class NewUserFragment extends Fragment {
                         calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
+        // selecting gender
+        Spinner spinner = getView().findViewById(R.id.edit_gender);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.genders, android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
     }
 }
