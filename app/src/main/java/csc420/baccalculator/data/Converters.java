@@ -1,6 +1,6 @@
 package csc420.baccalculator.data;
 
-import androidx.room.TypeConverter;
+import android.arch.persistence.room.TypeConverter;
 
 import java.util.Date;
 

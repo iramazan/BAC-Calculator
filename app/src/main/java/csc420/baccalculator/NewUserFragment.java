@@ -2,6 +2,8 @@ package csc420.baccalculator;
 
 
 import android.app.DatePickerDialog;
+import android.arch.persistence.room.Room;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,14 +11,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.*;
+import csc420.baccalculator.data.AppDatabase;
+import csc420.baccalculator.data.DatabaseManager;
+import csc420.baccalculator.data.User;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 
 /**
@@ -43,7 +49,7 @@ public class NewUserFragment extends Fragment {
 
         // Selecting date of birth
         final Calendar calendar = Calendar.getInstance();
-        final EditText editText = getView().findViewById(R.id.edit_dob);
+        final EditText editDob = getView().findViewById(R.id.edit_dob);
         final DatePickerDialog.OnDateSetListener dobPicker = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -51,10 +57,10 @@ public class NewUserFragment extends Fragment {
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy", Locale.US);
-                editText.setText(formatter.format(calendar.getTime()));
+                editDob.setText(formatter.format(calendar.getTime()));
             }
         };
-        editText.setOnClickListener(new View.OnClickListener() {
+        editDob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(getContext(), dobPicker, calendar.get(Calendar.YEAR),
@@ -63,10 +69,34 @@ public class NewUserFragment extends Fragment {
         });
 
         // selecting gender
-        Spinner spinner = getView().findViewById(R.id.edit_gender);
+        final Spinner spinner = getView().findViewById(R.id.edit_gender);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.genders, android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        // Handle new user submission
+        final Button submitButton = getView().findViewById(R.id.new_user_button);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppDatabase db = Room.databaseBuilder(getContext().getApplicationContext(),
+                        AppDatabase.class, "users").build();
+                EditText editName = getView().findViewById(R.id.edit_name);
+                String userName = editName.getText().toString();
+                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy", Locale.US);
+                Date dob = null;
+                try {
+                    dob = formatter.parse(editDob.getText().toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return;
+                }
+                User.Gender gender = User.Gender.valueOf(spinner.getSelectedItem().toString().toUpperCase());
+                User user = new User(userName, dob, gender);
+                Executor executor = Executors.newSingleThreadExecutor();
+                executor.execute(() -> db.userDao().insert(user));
+            }
+        });
     }
 }

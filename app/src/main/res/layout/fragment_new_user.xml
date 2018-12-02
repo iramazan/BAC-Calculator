@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editText"
+            android:id="@+id/edit_name"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
             app:layout_constraintStart_toStartOf="@+id/guideline" android:layout_marginStart="16dp"
             app:layout_constraintTop_toTopOf="@+id/guideline3" android:layout_marginTop="8dp"/>
@@ -87,7 +87,7 @@
             android:text="Submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="24dp"
+            android:id="@+id/new_user_button" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="24dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="24dp"
             app:layout_constraintTop_toTopOf="@+id/guideline6" android:layout_marginTop="24dp"
             android:background="@color/primaryFocus"/>
