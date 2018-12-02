@@ -1,14 +1,16 @@
 package csc420.baccalculator;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import csc420.baccalculator.data.SettingsFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SettingsFragment.OnFragmentSelectionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
                 ft.commit();
                 return true;
             case R.id.menu_settings:
-                // TODO: Switch to settings fragment
+                SettingsFragment sf = new SettingsFragment();
+                ft.replace(R.id.frag_holder, sf);
                 ft.commit();
                 return true;
             default:
@@ -61,4 +64,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
+        if (fragment instanceof SettingsFragment) {
+            ((SettingsFragment) fragment).setOnFragmentSelectionListener(this);
+        }
+    }
+
+    @Override
+    public void onFragmentSelection(Fragment fragment) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.frag_holder, fragment);
+        ft.commit();
+    }
 }

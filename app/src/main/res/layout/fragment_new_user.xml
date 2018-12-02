@@ -10,6 +10,7 @@
             android:text="Create New User:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="32sp"
             android:id="@+id/textView" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="16dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="16dp"/>
@@ -41,7 +42,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="Name"
             android:ems="10"
             android:id="@+id/editText"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
@@ -51,7 +51,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="Name"
             android:ems="10"
             android:id="@+id/editText2"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
@@ -61,7 +60,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="Name"
             android:ems="10"
             android:id="@+id/editText3"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
@@ -71,16 +69,16 @@
                                           android:id="@+id/guideline" app:layout_constraintGuide_begin="71dp"
                                           android:orientation="vertical"/>
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                          android:id="@+id/guideline3" app:layout_constraintGuide_begin="35dp"
+                                          android:id="@+id/guideline3" app:layout_constraintGuide_begin="59dp"
                                           android:orientation="horizontal"/>
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                          android:id="@+id/guideline4" app:layout_constraintGuide_begin="88dp"
+                                          android:id="@+id/guideline4" app:layout_constraintGuide_begin="112dp"
                                           android:orientation="horizontal"/>
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                          android:id="@+id/guideline5" app:layout_constraintGuide_begin="141dp"
+                                          android:id="@+id/guideline5" app:layout_constraintGuide_begin="165dp"
                                           android:orientation="horizontal"/>
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                          android:id="@+id/guideline6" app:layout_constraintGuide_begin="194dp"
+                                          android:id="@+id/guideline6" app:layout_constraintGuide_begin="218dp"
                                           android:orientation="horizontal"/>
     <Button
             android:text="Submit"
