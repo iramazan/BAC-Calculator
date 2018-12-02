@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
             case R.id.menu_home:
                 HomeFragment hf = new HomeFragment();
                 ft.replace(R.id.frag_holder, hf);
+                ft.addToBackStack(null);
                 ft.commit();
                 return true;
             case R.id.menu_profile:
@@ -50,11 +51,13 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
             case R.id.menu_contacts:
                 ContactsFragment cf = new ContactsFragment();
                 ft.replace(R.id.frag_holder, cf);
+                ft.addToBackStack(null);
                 ft.commit();
                 return true;
             case R.id.menu_settings:
                 SettingsFragment sf = new SettingsFragment();
                 ft.replace(R.id.frag_holder, sf);
+                ft.addToBackStack(null);
                 ft.commit();
                 return true;
             default:
@@ -77,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.frag_holder, fragment);
+        ft.addToBackStack(null);
         ft.commit();
     }
 }
