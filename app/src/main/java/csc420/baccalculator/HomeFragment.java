@@ -33,11 +33,8 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FloatingActionButton fab = getView().findViewById(R.id.calc_button);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: Switch to calc fragment
-            }
+        fab.setOnClickListener(view1 -> {
+            // TODO: Switch to calc fragment
         });
     }
 }

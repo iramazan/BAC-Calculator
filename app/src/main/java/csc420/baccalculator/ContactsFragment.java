@@ -43,11 +43,8 @@ public class ContactsFragment extends Fragment {
         recyclerView.setAdapter(contactsAdapter);
         // handle button
         FloatingActionButton fab = getView().findViewById(R.id.add_contact_button);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: Switch to fragment for adding contact
-            }
+        fab.setOnClickListener(view1 -> {
+            // TODO: Switch to fragment for adding contact
         });
     }
 }

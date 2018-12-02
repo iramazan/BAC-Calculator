@@ -35,12 +35,9 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final Button newUserButton = view.findViewById(R.id.new_user_button);
-        newUserButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NewUserFragment newUserFragment = new NewUserFragment();
-                activityCallback.onFragmentSelection(newUserFragment);
-            }
+        newUserButton.setOnClickListener(v -> {
+            NewUserFragment newUserFragment = new NewUserFragment();
+            activityCallback.onFragmentSelection(newUserFragment);
         });
     }
 

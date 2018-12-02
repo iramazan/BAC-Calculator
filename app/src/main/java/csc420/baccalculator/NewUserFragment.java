@@ -3,7 +3,6 @@ package csc420.baccalculator;
 
 import android.app.DatePickerDialog;
 import android.arch.persistence.room.Room;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import csc420.baccalculator.data.AppDatabase;
-import csc420.baccalculator.data.DatabaseManager;
 import csc420.baccalculator.data.User;
 
 import java.text.ParseException;
@@ -50,23 +48,15 @@ public class NewUserFragment extends Fragment {
         // Selecting date of birth
         final Calendar calendar = Calendar.getInstance();
         final EditText editDob = getView().findViewById(R.id.edit_dob);
-        final DatePickerDialog.OnDateSetListener dobPicker = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, month);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy", Locale.US);
-                editDob.setText(formatter.format(calendar.getTime()));
-            }
+        final DatePickerDialog.OnDateSetListener dobPicker = (view1, year, month, dayOfMonth) -> {
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy", Locale.US);
+            editDob.setText(formatter.format(calendar.getTime()));
         };
-        editDob.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(getContext(), dobPicker, calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
+        editDob.setOnClickListener(v -> new DatePickerDialog(getContext(), dobPicker, calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show());
 
         // selecting gender
         final Spinner spinner = getView().findViewById(R.id.edit_gender);
@@ -77,26 +67,23 @@ public class NewUserFragment extends Fragment {
 
         // Handle new user submission
         final Button submitButton = getView().findViewById(R.id.new_user_button);
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AppDatabase db = Room.databaseBuilder(getContext().getApplicationContext(),
-                        AppDatabase.class, "users").build();
-                EditText editName = getView().findViewById(R.id.edit_name);
-                String userName = editName.getText().toString();
-                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy", Locale.US);
-                Date dob = null;
-                try {
-                    dob = formatter.parse(editDob.getText().toString());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                    return;
-                }
-                User.Gender gender = User.Gender.valueOf(spinner.getSelectedItem().toString().toUpperCase());
-                User user = new User(userName, dob, gender);
-                Executor executor = Executors.newSingleThreadExecutor();
-                executor.execute(() -> db.userDao().insert(user));
+        submitButton.setOnClickListener(v -> {
+            AppDatabase db = Room.databaseBuilder(getContext().getApplicationContext(),
+                    AppDatabase.class, "users").build();
+            EditText editName = getView().findViewById(R.id.edit_name);
+            String userName = editName.getText().toString();
+            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy", Locale.US);
+            Date dob = null;
+            try {
+                dob = formatter.parse(editDob.getText().toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return;
             }
+            User.Gender gender = User.Gender.valueOf(spinner.getSelectedItem().toString().toUpperCase());
+            User user = new User(userName, dob, gender);
+            Executor executor = Executors.newSingleThreadExecutor();
+            executor.execute(() -> db.userDao().insert(user));
         });
     }
 }
