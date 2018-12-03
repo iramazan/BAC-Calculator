@@ -13,6 +13,10 @@ public class Ingredient {
     @PrimaryKey(autoGenerate = true)
     public long uid;
 
+    public Ingredient(String name) {
+        this.name = name;
+    }
+
     @ColumnInfo(name = "ingredient_name")
     public String name;
 

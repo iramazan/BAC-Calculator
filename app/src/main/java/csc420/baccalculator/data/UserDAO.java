@@ -27,6 +27,9 @@ public interface UserDAO {
     @Insert
     long insert(Ingredient ingredient);
 
+    @Insert
+    long[] insertAll(List<Ingredient> ingredients);
+
     @Delete
     void delete(User user);
 }
