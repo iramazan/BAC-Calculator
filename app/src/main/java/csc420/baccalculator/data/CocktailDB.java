@@ -23,12 +23,13 @@ public class CocktailDB {
         String param;
         Context context;
 
-        public SearchByNameCall(String param, Context context) {
+        SearchByNameCall(String param, Context context) {
             this.param = param;
             this.context = context;
         }
 
-        public String saveImgToFilesystem(String url) throws IOException {
+        String saveImgToFilesystem(String url) throws IOException {
+            // TODO: Put this somewhere else
             String fileName = UUID.randomUUID().toString() + ".jpg";
             File imgFile = new File(context.getExternalFilesDir(null), fileName);
             URL imgUrl = new URL(url);
@@ -67,8 +68,8 @@ public class CocktailDB {
                         ingredients.add(new Ingredient(jsonReader.nextString()));
                     }
                 }
-                String imgFile = saveImgToFilesystem(imgUrl);
-                drinks.add(new Drink(ingredients, Drink.DrinkType.MIXED, imgFile, drinkName));
+                Bitmap bitmap = BitmapFactory.decodeStream(new URL(imgUrl).openConnection().getInputStream());
+                drinks.add(new Drink(ingredients, Drink.DrinkType.MIXED, bitmap, drinkName));
                 jsonReader.endObject();
             }
             jsonReader.endArray();

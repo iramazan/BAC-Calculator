@@ -1,6 +1,7 @@
 package csc420.baccalculator.data;
 
 import android.arch.persistence.room.*;
+import android.graphics.Bitmap;
 
 import java.util.List;
 
@@ -19,11 +20,11 @@ public class Drink {
         this.drinkName = drinkName;
     }
 
-    public Drink(List<Ingredient> ingredients, DrinkType drinkType, String drinkPath, String drinkName) {
+    public Drink(List<Ingredient> ingredients, DrinkType drinkType, Bitmap drinkImg, String drinkName) {
         this.ingredients = ingredients;
         this.userId = uid;
         this.drinkType = drinkType;
-        this.drinkPath = drinkPath;
+        this.drinkImage = drinkImage;
         this.drinkName = drinkName;
     }
 
@@ -44,4 +45,7 @@ public class Drink {
 
     @Ignore
     public List<Ingredient> ingredients;
+
+    @Ignore
+    public Bitmap drinkImage;
 }
