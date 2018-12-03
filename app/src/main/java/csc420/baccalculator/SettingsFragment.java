@@ -1,4 +1,4 @@
-package csc420.baccalculator.data;
+package csc420.baccalculator;
 
 
 import android.os.Bundle;

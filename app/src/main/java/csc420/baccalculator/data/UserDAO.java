@@ -9,6 +9,9 @@ import java.util.List;
 
 @Dao
 public interface UserDAO {
+    @Query("SELECT * FROM ingredient where drink_id IS :drinkId")
+    List<Ingredient> getIngredientsForDrink(long drinkId);
+
     @Query("SELECT * FROM drink WHERE user_id IS :userId")
     List<Drink> getDrinksForUser(long userId);
 
@@ -17,6 +20,12 @@ public interface UserDAO {
 
     @Insert
     long insert(User user);
+
+    @Insert
+    long insert(Drink drink);
+
+    @Insert
+    long insert(Ingredient ingredient);
 
     @Delete
     void delete(User user);

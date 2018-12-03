@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import csc420.baccalculator.data.DatabaseManager;
 import csc420.baccalculator.data.User;
@@ -26,6 +27,7 @@ import java.util.concurrent.Executors;
  */
 public class ProfileFragment extends Fragment {
 
+    OnFragmentSelectionListener activityCallback;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -60,5 +62,16 @@ public class ProfileFragment extends Fragment {
         dobView.setText("Date Of Birth: " + formatter.format(user.birthday));
         TextView genderView = getView().findViewById(R.id.gender_profile);
         genderView.setText("Gender: " + user.gender.name().toLowerCase());
+        // set button listeners
+        Button favoritePage = getView().findViewById(R.id.favorites_profile_button);
+        favoritePage.setOnClickListener(v -> activityCallback.onFragmentSelection(new FavoritesPageFragment()));
+    }
+
+    public void setOnFragmentSelectionListener(OnFragmentSelectionListener activity) {
+        activityCallback = activity;
+    }
+
+    public interface OnFragmentSelectionListener {
+        void onFragmentSelection(Fragment fragment);
     }
 }

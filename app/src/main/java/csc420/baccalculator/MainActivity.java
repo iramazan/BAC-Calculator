@@ -8,10 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import csc420.baccalculator.data.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity implements SettingsFragment.OnFragmentSelectionListener,
-                                                               NewUserFragment.OnFragmentSelectionListener{
+                                                               NewUserFragment.OnFragmentSelectionListener,
+                                                               ProfileFragment.OnFragmentSelectionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
             ((SettingsFragment) fragment).setOnFragmentSelectionListener(this);
         } else if (fragment instanceof NewUserFragment) {
             ((NewUserFragment) fragment).setOnFragmentSelectionListener(this);
+        } else if (fragment instanceof ProfileFragment) {
+            ((ProfileFragment) fragment).setOnFragmentSelectionListener(this);
         }
     }
 
