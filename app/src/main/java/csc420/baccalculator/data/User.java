@@ -18,7 +18,7 @@ public class User {
     }
 
     @PrimaryKey(autoGenerate = true)
-    public int uid;
+    public long uid;
 
     @ColumnInfo(name = "user_name")
     public String name;

@@ -11,11 +11,11 @@ import android.arch.persistence.room.PrimaryKey;
         childColumns = "drink_id"))
 public class Ingredient {
     @PrimaryKey(autoGenerate = true)
-    public int uid;
+    public long uid;
 
     @ColumnInfo(name = "ingredient_name")
     public String name;
 
     @ColumnInfo(name = "drink_id")
-    public int drinkId;
+    public long drinkId;
 }

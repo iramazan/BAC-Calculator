@@ -10,10 +10,13 @@ import java.util.List;
 @Dao
 public interface UserDAO {
     @Query("SELECT * FROM drink WHERE user_id IS :userId")
-    List<Drink> getDrinksForUser(int userId);
+    List<Drink> getDrinksForUser(long userId);
+
+    @Query("SELECT * FROM user WHERE uid is :userId")
+    User getUserById(long userId);
 
     @Insert
-    void insert(User user);
+    long insert(User user);
 
     @Delete
     void delete(User user);

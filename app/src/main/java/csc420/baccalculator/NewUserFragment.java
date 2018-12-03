@@ -3,6 +3,8 @@ package csc420.baccalculator;
 
 import android.app.DatePickerDialog;
 import android.arch.persistence.room.Room;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import csc420.baccalculator.data.AppDatabase;
+import csc420.baccalculator.data.DatabaseManager;
 import csc420.baccalculator.data.User;
 
 import java.text.ParseException;
@@ -19,8 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 
 /**
@@ -69,8 +71,7 @@ public class NewUserFragment extends Fragment {
         // Handle new user submission
         final Button submitButton = getView().findViewById(R.id.new_user_button);
         submitButton.setOnClickListener(v -> {
-            AppDatabase db = Room.databaseBuilder(getContext().getApplicationContext(),
-                    AppDatabase.class, "users").build();
+            AppDatabase db = DatabaseManager.getIntance(getContext().getApplicationContext());
             EditText editName = getView().findViewById(R.id.edit_name);
             String userName = editName.getText().toString();
             SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy", Locale.US);
@@ -84,7 +85,17 @@ public class NewUserFragment extends Fragment {
             User.Gender gender = User.Gender.valueOf(spinner.getSelectedItem().toString().toUpperCase());
             User user = new User(userName, dob, gender);
             ExecutorService executor = Executors.newSingleThreadExecutor();
-            executor.execute(() -> db.userDao().insert(user));
+            Future<Long> genUid = executor.submit(() -> db.userDao().insert(user));
+            SharedPreferences sharedPref = getActivity().getSharedPreferences(
+                    getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            try {
+                editor.putLong(getString(R.string.current_user_key), genUid.get());
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+                return;
+            }
+            editor.commit();
             activityCallback.onFragmentSelectionNoStack(new SuccessFragment());
         });
     }

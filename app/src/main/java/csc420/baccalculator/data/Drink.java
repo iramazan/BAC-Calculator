@@ -15,7 +15,7 @@ public class Drink {
     public enum DrinkType { BEER, WINE, LIQUOR, MIXED }
 
     @PrimaryKey(autoGenerate = true)
-    public int uid;
+    public long uid;
 
     @ColumnInfo(name = "drink_type")
     public DrinkType drinkType;
@@ -27,5 +27,5 @@ public class Drink {
     public String drinkName;
 
     @ColumnInfo(name = "user_id")
-    public int userId;
+    public long userId;
 }
