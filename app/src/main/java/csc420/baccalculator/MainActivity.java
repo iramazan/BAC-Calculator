@@ -11,7 +11,8 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity implements SettingsFragment.OnFragmentSelectionListener,
                                                                NewUserFragment.OnFragmentSelectionListener,
-                                                               ProfileFragment.OnFragmentSelectionListener {
+                                                               ProfileFragment.OnFragmentSelectionListener,
+                                                               FavoritesPageFragment.OnFragmentSelectionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
             ((NewUserFragment) fragment).setOnFragmentSelectionListener(this);
         } else if (fragment instanceof ProfileFragment) {
             ((ProfileFragment) fragment).setOnFragmentSelectionListener(this);
+        } else if (fragment instanceof FavoritesPageFragment) {
+            ((FavoritesPageFragment) fragment).setOnFragmentSelectionListener(this);
         }
     }
 
