@@ -20,6 +20,9 @@ public class Drink {
     @ColumnInfo(name = "drink_type")
     public DrinkType drinkType;
 
+    @ColumnInfo(name = "drink_path")
+    public String drinkPath;
+
     @ColumnInfo(name = "drink_name")
     public String drinkName;
 

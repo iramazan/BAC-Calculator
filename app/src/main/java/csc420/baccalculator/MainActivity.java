@@ -46,7 +46,9 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
                 ft.commit();
                 return true;
             case R.id.menu_profile:
-                // TODO: Switch to profile fragment
+                ProfileFragment pf = new ProfileFragment();
+                ft.replace(R.id.frag_holder, pf);
+                ft.addToBackStack(null);
                 ft.commit();
                 return true;
             case R.id.menu_contacts:

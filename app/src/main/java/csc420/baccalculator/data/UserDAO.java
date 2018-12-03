@@ -10,7 +10,7 @@ import java.util.List;
 @Dao
 public interface UserDAO {
     @Query("SELECT * FROM drink WHERE user_id IS :userId")
-    List<Drink> getDriksForUser(int userId);
+    List<Drink> getDrinksForUser(int userId);
 
     @Insert
     void insert(User user);
