@@ -6,10 +6,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import csc420.baccalculator.data.Drink;
@@ -49,12 +50,15 @@ public class DrinkDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ImageView imageView = getView().findViewById(R.id.dialog_drink_image);
         TextView drinkName = getView().findViewById(R.id.dialog_drink_name);
+        imageView.setImageBitmap(drink.drinkImage);
         drinkName.setText(drink.drinkName);
         LinearLayout ingredientList = getView().findViewById(R.id.ingredients_list_layout);
         for (Ingredient ingredient : drink.ingredients) {
             TextView textView = new TextView(getContext());
             textView.setText(ingredient.name);
+            textView.setGravity(Gravity.CENTER_HORIZONTAL);
             ingredientList.addView(textView);
         }
     }

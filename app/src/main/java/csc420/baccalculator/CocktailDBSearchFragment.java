@@ -45,7 +45,7 @@ public class CocktailDBSearchFragment extends Fragment {
                 Context context = getActivity().getApplicationContext();
                 try {
                     MemoryImageAdapter adapter =
-                            new MemoryImageAdapter(context, CocktailDB.searchByName(query, context).get());
+                            new MemoryImageAdapter(context, getActivity(), CocktailDB.searchByName(query, context).get());
                     gridView.invalidateViews();
                     gridView.setAdapter(adapter);
                 } catch (ExecutionException | InterruptedException e) {

@@ -57,11 +57,13 @@ public class SearchFragment extends Fragment {
             return;
         }
         GridView gridView = getView().findViewById(R.id.search_grid);
-        MemoryImageAdapter adapter = new MemoryImageAdapter(this.getContext(), drinks);
-        gridView.setAdapter(adapter);
+        MemoryImageAdapter adapter = new MemoryImageAdapter(this.getContext(), this.getActivity(), drinks);
+        /*
         gridView.setOnItemClickListener((parent, v, pos, id) -> {
             Drink drink = (Drink) adapter.getItem(pos);
             DrinkDialogFragment.newInstance(drink).show(getActivity().getSupportFragmentManager(), null);
         });
+        */
+        gridView.setAdapter(adapter);
     }
 }
