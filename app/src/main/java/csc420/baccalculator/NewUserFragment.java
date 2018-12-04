@@ -71,7 +71,7 @@ public class NewUserFragment extends Fragment {
         // Handle new user submission
         final Button submitButton = getView().findViewById(R.id.new_user_button);
         submitButton.setOnClickListener(v -> {
-            AppDatabase db = DatabaseManager.getIntance(getContext().getApplicationContext());
+            AppDatabase db = DatabaseManager.getInstance(getContext().getApplicationContext());
             EditText editName = getView().findViewById(R.id.edit_name);
             String userName = editName.getText().toString();
             SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy", Locale.US);

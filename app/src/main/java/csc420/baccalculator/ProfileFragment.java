@@ -50,7 +50,7 @@ public class ProfileFragment extends Fragment {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         User user;
         try {
-            user = executor.submit(() -> DatabaseManager.getIntance(getActivity().getApplicationContext()).userDao().getUserById(userId)).get();
+            user = executor.submit(() -> DatabaseManager.getInstance(getActivity().getApplicationContext()).userDao().getUserById(userId)).get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
             return;
