@@ -46,7 +46,7 @@ public class FavoritesFragment extends Fragment {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         User user;
         try {
-            user = executor.submit(() -> DatabaseManager.getIntance(getActivity().getApplicationContext())
+            user = executor.submit(() -> DatabaseManager.getInstance(getActivity().getApplicationContext())
                             .userDao().getUserById(userId)).get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();

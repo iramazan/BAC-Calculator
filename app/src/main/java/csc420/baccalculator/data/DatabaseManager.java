@@ -7,7 +7,7 @@ public class DatabaseManager {
 
     private static AppDatabase INSTANCE;
 
-    public static AppDatabase getIntance(Context context) {
+    public static AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context, AppDatabase.class, "users").build();
         }

@@ -7,29 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import csc420.baccalculator.data.DatabaseManager;
 import csc420.baccalculator.data.Drink;
-import csc420.baccalculator.data.User;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-public class DrinkImageAdapter extends BaseAdapter {
+public class MemoryImageAdapter extends BaseAdapter {
 
     private Context context;
     private List<Drink> drinks;
 
-    public DrinkImageAdapter(Context context, User user) {
+    public MemoryImageAdapter(Context context, List<Drink> drinks) {
         this.context = context;
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        try {
-            this.drinks = executor.submit(() ->
-                    DatabaseManager.getInstance(context).userDao().getDrinksForUser(user.uid)).get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
+        this.drinks = drinks;
     }
 
     @Override
@@ -58,8 +47,9 @@ public class DrinkImageAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
-        Bitmap bitmap = BitmapFactory.decodeFile(drinks.get(position).drinkPath);
+        Bitmap bitmap = drinks.get(position).drinkImage;
         imageView.setImageBitmap(bitmap);
         return imageView;
     }
+
 }
