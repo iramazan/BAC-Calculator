@@ -3,6 +3,7 @@ package csc420.baccalculator.data;
 import android.arch.persistence.room.*;
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity(foreignKeys = @ForeignKey(
@@ -10,7 +11,7 @@ import java.util.List;
         parentColumns = "uid",
         childColumns = "user_id"
 ))
-public class Drink {
+public class Drink implements Serializable {
     // TODO: What are drink types?
     public enum DrinkType { BEER, WINE, LIQUOR, MIXED }
 
