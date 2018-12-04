@@ -2,7 +2,6 @@ package csc420.baccalculator;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -41,8 +40,10 @@ public class MemoryImageAdapter extends BaseAdapter {
         ImageView imageView;
         if (convertView == null) {
             imageView = new ImageView(context);
+            /*
             imageView.setLayoutParams(new ViewGroup.LayoutParams(85, 85));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            */
             imageView.setPadding(8, 8,  8, 8);
         } else {
             imageView = (ImageView) convertView;

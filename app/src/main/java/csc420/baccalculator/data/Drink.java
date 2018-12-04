@@ -24,7 +24,7 @@ public class Drink {
         this.ingredients = ingredients;
         this.userId = uid;
         this.drinkType = drinkType;
-        this.drinkImage = drinkImage;
+        this.drinkImage = drinkImg;
         this.drinkName = drinkName;
     }
 

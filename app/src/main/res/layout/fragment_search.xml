@@ -10,4 +10,5 @@
           android:stretchMode="columnWidth"
           android:numColumns="auto_fit"
           android:gravity="center"
+          android:scrollbars="horizontal"
           tools:context=".FavoritesFragment" />

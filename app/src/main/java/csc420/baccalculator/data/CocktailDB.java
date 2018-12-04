@@ -3,7 +3,11 @@ package csc420.baccalculator.data;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.JsonReader;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
@@ -51,29 +55,22 @@ public class CocktailDB {
             }
             InputStreamReader response = new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8);
             JsonReader jsonReader = new JsonReader(response);
-            jsonReader.beginObject();
-            jsonReader.beginArray();
-            while (jsonReader.hasNext()) {
-                jsonReader.beginObject();
+            final JsonElement root = new JsonParser().parse(jsonReader);
+            final JsonArray drinksArray = root.getAsJsonObject().getAsJsonArray("drinks");
+            for (JsonElement jsonElem : drinksArray) {
                 List<Ingredient> ingredients = new ArrayList<>();
-                String drinkName = "";
-                String imgUrl = "";
-                while (jsonReader.hasNext()) {
-                    String key = jsonReader.nextName();
-                    if (key.equals("strDrink")) {
-                        drinkName = jsonReader.nextString();
-                    } else if (key.equals("strDrinkThumb")) {
-                        imgUrl = jsonReader.nextString();
-                    } else if (key.startsWith("strIngredient")) {
-                        ingredients.add(new Ingredient(jsonReader.nextString()));
+                JsonObject obj = jsonElem.getAsJsonObject();
+                for (int i = 1; i <= 15; i++) {
+                    String ingredient = obj.get("strIngredient" + i).getAsString();
+                    if (!ingredient.equals("")) {
+                        ingredients.add(new Ingredient(ingredient));
                     }
                 }
-                Bitmap bitmap = BitmapFactory.decodeStream(new URL(imgUrl).openConnection().getInputStream());
-                drinks.add(new Drink(ingredients, Drink.DrinkType.MIXED, bitmap, drinkName));
-                jsonReader.endObject();
+                String drinkName = obj.get("strDrink").getAsString();
+                URL imgUrl = new URL(obj.get("strDrinkThumb").getAsString());
+                Bitmap img = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
+                drinks.add(new Drink(ingredients, Drink.DrinkType.MIXED, img, drinkName));
             }
-            jsonReader.endArray();
-            jsonReader.endObject();
             jsonReader.close();
             connection.disconnect();
             return drinks;
