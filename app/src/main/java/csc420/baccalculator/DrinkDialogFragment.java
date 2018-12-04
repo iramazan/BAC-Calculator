@@ -1,6 +1,9 @@
 package csc420.baccalculator;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,11 +13,18 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
+import csc420.baccalculator.data.DatabaseManager;
 import csc420.baccalculator.data.Drink;
 import csc420.baccalculator.data.Ingredient;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 /**
@@ -23,6 +33,7 @@ import csc420.baccalculator.data.Ingredient;
 public class DrinkDialogFragment extends DialogFragment {
 
     private Drink drink;
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public DrinkDialogFragment() {
         // Required empty public constructor
@@ -61,5 +72,37 @@ public class DrinkDialogFragment extends DialogFragment {
             textView.setGravity(Gravity.CENTER_HORIZONTAL);
             ingredientList.addView(textView);
         }
+        ImageButton favoriteButton = getView().findViewById(R.id.dialog_favorite_button);
+        favoriteButton.setOnClickListener(v -> {
+            executor.execute(this::addDrinkToFavorites);
+            this.dismiss();
+        });
+    }
+
+    private String saveImgToFilesystem(Bitmap bitmap) throws IOException {
+        String fileName = UUID.randomUUID().toString() + ".jpg";
+        File imgFile = new File(getActivity().getExternalFilesDir(null), fileName);
+        OutputStream out = new FileOutputStream(imgFile);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+        out.flush();
+        out.close();
+        return fileName;
+    }
+
+    private void addDrinkToFavorites() {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        drink.userId = sharedPref.getLong(getString(R.string.current_user_key), 0);
+        try {
+            drink.drinkPath = saveImgToFilesystem(drink.drinkImage);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        drink.uid = DatabaseManager.getInstance(getActivity().getApplicationContext()).userDao().insert(drink);
+        for (Ingredient ingredient : drink.ingredients) {
+            ingredient.drinkId = drink.uid;
+        }
+        DatabaseManager.getInstance(getActivity().getApplicationContext()).userDao().insertAll(drink.ingredients);
     }
 }

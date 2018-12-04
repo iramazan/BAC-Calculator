@@ -15,7 +15,6 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.*;
 
 public class CocktailDB {
@@ -30,19 +29,6 @@ public class CocktailDB {
         SearchByNameCall(String param, Context context) {
             this.param = param;
             this.context = context;
-        }
-
-        String saveImgToFilesystem(String url) throws IOException {
-            // TODO: Put this somewhere else
-            String fileName = UUID.randomUUID().toString() + ".jpg";
-            File imgFile = new File(context.getExternalFilesDir(null), fileName);
-            URL imgUrl = new URL(url);
-            Bitmap bitmap = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
-            OutputStream out = new FileOutputStream(imgFile);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            out.flush();
-            out.close();
-            return fileName;
         }
 
         @Override

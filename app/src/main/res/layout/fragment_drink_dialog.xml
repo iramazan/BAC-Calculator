@@ -45,4 +45,11 @@
                       android:id="@+id/ingredients_list_layout"
                       android:orientation="vertical"/>
     </ScrollView>
+    <ImageButton
+            android:src="@drawable/icons8_heart_outline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dialog_favorite_button" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/guideline8"
+            app:layout_constraintStart_toEndOf="@+id/dialog_drink_image" android:contentDescription="TODO"/>
 </android.support.constraint.ConstraintLayout>
