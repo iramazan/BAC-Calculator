@@ -3,6 +3,7 @@ package csc420.baccalculator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -23,11 +24,13 @@ import java.util.concurrent.Executors;
 public class DrinkImageAdapter extends BaseAdapter {
 
     private Context context;
+    private FragmentActivity activity;
     private List<Drink> drinks;
+    ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    public DrinkImageAdapter(Context context, User user) {
+    public DrinkImageAdapter(Context context, FragmentActivity activity, User user) {
         this.context = context;
-        ExecutorService executor = Executors.newSingleThreadExecutor();
+        this.activity = activity;
         try {
             this.drinks = executor.submit(() ->
                     DatabaseManager.getInstance(context).userDao().getDrinksForUser(user.uid)).get();
@@ -69,6 +72,11 @@ public class DrinkImageAdapter extends BaseAdapter {
             e.printStackTrace();
         }
         imageView.setImageBitmap(bitmap);
+        drinks.get(position).drinkImage = bitmap;
+        imageView.setOnClickListener(v -> {
+            DrinkDialogFragment dialog = DrinkDialogFragment.newInstance(drinks.get(position));
+            dialog.show(activity.getSupportFragmentManager(), null);
+        });
         return imageView;
     }
 

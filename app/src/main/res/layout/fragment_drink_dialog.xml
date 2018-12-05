@@ -51,5 +51,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/dialog_favorite_button" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/guideline8"
-            app:layout_constraintStart_toEndOf="@+id/dialog_drink_image" android:contentDescription="TODO"/>
+            app:layout_constraintStart_toEndOf="@+id/dialog_drink_image" android:contentDescription="TODO"
+            android:background="#353839"/>
 </android.support.constraint.ConstraintLayout>

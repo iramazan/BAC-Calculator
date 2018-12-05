@@ -54,6 +54,6 @@ public class FavoritesFragment extends Fragment {
         }
         super.onViewCreated(view, savedInstanceState);
         GridView gridView = getView().findViewById(R.id.drinks_grid);
-        gridView.setAdapter(new DrinkImageAdapter(this.getContext(), user));
+        gridView.setAdapter(new DrinkImageAdapter(this.getContext(), getActivity(), user));
     }
 }
