@@ -4,21 +4,19 @@ package csc420.baccalculator;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment {
+public class CalculatorFragment extends Fragment {
 
-    private OnFragmentSelectionListener activity;
-
-    public HomeFragment() {
+    public CalculatorFragment() {
         // Required empty public constructor
     }
 
@@ -27,24 +25,12 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_calculator, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FloatingActionButton fab = getView().findViewById(R.id.calc_button);
-        fab.setOnClickListener(v -> {
-            CalculatorFragment fragment = new CalculatorFragment();
-            activity.onFragmentSelection(fragment);
-        });
-    }
-
-    public void setOnFragmentSelection(OnFragmentSelectionListener activity) {
-        this.activity = activity;
-    }
-
-    public interface OnFragmentSelectionListener {
-        void onFragmentSelection(Fragment fragment);
+        Button submitButton = getView().findViewById(R.id.submit_drink_button);
     }
 }
