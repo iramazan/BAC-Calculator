@@ -25,13 +25,16 @@ public class SelectableImageAdapter extends BaseAdapter {
 
     private Context context;
     private FragmentActivity activity;
+    private OnDrinkSelectedListener parent;
     private List<Drink> drinks;
-    ImageView selected = null;
+    private ImageView selected = null;
+    private int selectedPos;
     ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    public SelectableImageAdapter(Context context, FragmentActivity activity, User user) {
+    public SelectableImageAdapter(Context context, FragmentActivity activity, User user, OnDrinkSelectedListener parent) {
         this.context = context;
         this.activity = activity;
+        this.parent = parent;
         try {
             this.drinks = executor.submit(() ->
                     DatabaseManager.getInstance(context).userDao().getDrinksForUser(user.uid)).get();
@@ -80,9 +83,15 @@ public class SelectableImageAdapter extends BaseAdapter {
                 this.selected.setBackground(null);
             }
             imageView.setBackgroundResource(R.drawable.img_border);
+            this.selectedPos = position;
             this.selected = imageView;
+            this.parent.onDrinkSelected(drinks.get(position));
         });
         return imageView;
+    }
+
+    public Drink getSelectedDrink() {
+        return drinks.get(selectedPos);
     }
 
     private Bitmap loadImgFromFilesystem(String fileName) throws IOException {
@@ -91,5 +100,9 @@ public class SelectableImageAdapter extends BaseAdapter {
         Bitmap bitmap = BitmapFactory.decodeStream(in);
         in.close();
         return bitmap;
+    }
+
+    public interface OnDrinkSelectedListener {
+        void onDrinkSelected(Drink drink);
     }
 }

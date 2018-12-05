@@ -44,6 +44,9 @@ public class Drink implements Serializable {
     @ColumnInfo(name = "user_id")
     public long userId;
 
+    @ColumnInfo(name = "grams_of_alcohol")
+    public double gramsOfAlcohol;
+
     @Ignore
     public List<Ingredient> ingredients;
 

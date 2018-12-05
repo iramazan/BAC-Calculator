@@ -6,6 +6,7 @@
              tools:context=".HomeFragment">
 
     <TextView
+            android:id="@+id/bac_text"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_marginTop="0dp"

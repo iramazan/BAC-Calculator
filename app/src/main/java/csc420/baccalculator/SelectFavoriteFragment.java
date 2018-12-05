@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import csc420.baccalculator.data.DatabaseManager;
+import csc420.baccalculator.data.Drink;
 import csc420.baccalculator.data.User;
 
 import java.util.concurrent.ExecutionException;
@@ -22,13 +23,19 @@ import java.util.concurrent.Executors;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SelectFavoriteFragment extends Fragment {
+public class SelectFavoriteFragment extends Fragment implements SelectableImageAdapter.OnDrinkSelectedListener {
 
+    OnDrinkSelectionListener parent;
 
     public SelectFavoriteFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        parent = (OnDrinkSelectionListener) getParentFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,8 +59,17 @@ public class SelectFavoriteFragment extends Fragment {
             return;
         }
         super.onViewCreated(view, savedInstanceState);
-        GridView gridView = getView().findViewById(R.id.drinks_grid);
-        gridView.setAdapter(new SelectableImageAdapter(this.getContext(), getActivity(), user));
+        GridView gridView = getView().findViewById(R.id.selection_drink_grid);
+        gridView.setAdapter(new SelectableImageAdapter(this.getContext(), getActivity(), user, this));
+    }
+
+    @Override
+    public void onDrinkSelected(Drink drink) {
+        parent.onDrinkSelection(drink);
+    }
+
+    public interface OnDrinkSelectionListener {
+        void onDrinkSelection(Drink drink);
     }
 
 }

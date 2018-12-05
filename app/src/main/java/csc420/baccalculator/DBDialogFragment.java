@@ -14,10 +14,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 import csc420.baccalculator.data.DatabaseManager;
 import csc420.baccalculator.data.Drink;
 import csc420.baccalculator.data.Ingredient;
@@ -59,7 +56,8 @@ public class DBDialogFragment extends DialogFragment {
             drink = (Drink) bundle.getSerializable("drink");
         }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_drink_dialog, container, false);
+        //return inflater.inflate(R.layout.fragment_drink_dialog, container, false);
+        return inflater.inflate(R.layout.fragment_dbdialog, container, false);
     }
 
     @Override
@@ -98,6 +96,11 @@ public class DBDialogFragment extends DialogFragment {
         SharedPreferences sharedPref = activity.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         drink.userId = sharedPref.getLong(getString(R.string.current_user_key), 0);
+        EditText editVolume = getView().findViewById(R.id.edit_volume);
+        EditText editAbv = getView().findViewById(R.id.edit_abv);
+        double volume = Double.parseDouble(editVolume.getText().toString());
+        double abv = Double.parseDouble(editAbv.getText().toString());
+        drink.gramsOfAlcohol = volume * abv * 0.789;
         try {
             drink.drinkPath = saveImgToFilesystem(drink.drinkImage);
         } catch (IOException e) {

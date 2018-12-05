@@ -1,6 +1,8 @@
 package csc420.baccalculator;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -38,6 +41,11 @@ public class HomeFragment extends Fragment {
             CalculatorFragment fragment = new CalculatorFragment();
             activity.onFragmentSelection(fragment);
         });
+        TextView bacTextView = getView().findViewById(R.id.bac_text);
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        double bac = Double.parseDouble(sharedPref.getString(getString(R.string.bac_key), "0"));
+        bacTextView.setText(String.format("%f", bac));
     }
 
     public void setOnFragmentSelection(OnFragmentSelectionListener activity) {
