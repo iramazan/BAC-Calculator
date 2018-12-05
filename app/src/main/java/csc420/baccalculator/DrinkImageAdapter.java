@@ -11,6 +11,10 @@ import csc420.baccalculator.data.DatabaseManager;
 import csc420.baccalculator.data.Drink;
 import csc420.baccalculator.data.User;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -52,14 +56,27 @@ public class DrinkImageAdapter extends BaseAdapter {
         ImageView imageView;
         if (convertView == null) {
             imageView = new ImageView(context);
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(85, 85));
+            imageView.setLayoutParams(new ViewGroup.LayoutParams(450, 450));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(8, 8,  8, 8);
         } else {
             imageView = (ImageView) convertView;
         }
-        Bitmap bitmap = BitmapFactory.decodeFile(drinks.get(position).drinkPath);
+        Bitmap bitmap = null;
+        try {
+            bitmap = loadImgFromFilesystem(drinks.get(position).drinkPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         imageView.setImageBitmap(bitmap);
         return imageView;
+    }
+
+    private Bitmap loadImgFromFilesystem(String fileName) throws IOException {
+        File imgFile = new File(context.getExternalFilesDir(null), fileName);
+        InputStream in = new FileInputStream(imgFile);
+        Bitmap bitmap = BitmapFactory.decodeStream(in);
+        in.close();
+        return bitmap;
     }
 }
