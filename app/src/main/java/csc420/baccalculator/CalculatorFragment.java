@@ -11,15 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridView;
 import csc420.baccalculator.data.DatabaseManager;
 import csc420.baccalculator.data.Drink;
 import csc420.baccalculator.data.User;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 
 /**
@@ -54,7 +51,6 @@ public class CalculatorFragment extends Fragment implements SelectFavoriteFragme
             SharedPreferences sharedPref = getActivity().getSharedPreferences(
                     getString(R.string.preference_file_key), Context.MODE_PRIVATE);
             double alcoholConsumed = Double.parseDouble(sharedPref.getString(getString(R.string.alcohol_consumed_key), "0"));
-            // TODO: Get drink object
             Drink drink = selectedDrink;
             SharedPreferences.Editor editor = sharedPref.edit();
             double totalGrams = alcoholConsumed + drink.gramsOfAlcohol;
