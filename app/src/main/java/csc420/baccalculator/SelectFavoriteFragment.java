@@ -22,10 +22,10 @@ import java.util.concurrent.Executors;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FavoritesFragment extends Fragment {
+public class SelectFavoriteFragment extends Fragment {
 
 
-    public FavoritesFragment() {
+    public SelectFavoriteFragment() {
         // Required empty public constructor
     }
 
@@ -34,7 +34,7 @@ public class FavoritesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorites, container, false);
+        return inflater.inflate(R.layout.fragment_select_favorite, container, false);
     }
 
     @Override
@@ -46,13 +46,14 @@ public class FavoritesFragment extends Fragment {
         User user;
         try {
             user = executor.submit(() -> DatabaseManager.getInstance(getActivity().getApplicationContext())
-                            .userDao().getUserById(userId)).get();
+                    .userDao().getUserById(userId)).get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
             return;
         }
         super.onViewCreated(view, savedInstanceState);
         GridView gridView = getView().findViewById(R.id.drinks_grid);
-        gridView.setAdapter(new DrinkImageAdapter(this.getContext(), getActivity(), user));
+        gridView.setAdapter(new SelectableImageAdapter(this.getContext(), getActivity(), user));
     }
+
 }
