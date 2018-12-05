@@ -73,7 +73,9 @@ public class NewUserFragment extends Fragment {
         submitButton.setOnClickListener(v -> {
             AppDatabase db = DatabaseManager.getInstance(getContext().getApplicationContext());
             EditText editName = getView().findViewById(R.id.edit_name);
+            EditText editWeight = getView().findViewById(R.id.edit_weight);
             String userName = editName.getText().toString();
+            int weight = Integer.parseInt(editWeight.getText().toString());
             SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy", Locale.US);
             Date dob;
             try {
@@ -83,7 +85,7 @@ public class NewUserFragment extends Fragment {
                 return;
             }
             User.Gender gender = User.Gender.valueOf(spinner.getSelectedItem().toString().toUpperCase());
-            User user = new User(userName, dob, gender);
+            User user = new User(userName, dob, gender, weight);
             ExecutorService executor = Executors.newSingleThreadExecutor();
             Future<Long> genUid = executor.submit(() -> db.userDao().insert(user));
             SharedPreferences sharedPref = getActivity().getSharedPreferences(

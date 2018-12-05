@@ -50,7 +50,7 @@ public class MemoryImageAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
         imageView.setOnClickListener(v -> {
-            DrinkDialogFragment dialog = DrinkDialogFragment.newInstance(drinks.get(position));
+            DBDialogFragment dialog = DBDialogFragment.newInstance(drinks.get(position));
             dialog.show(activity.getSupportFragmentManager(), null);
         });
         Bitmap bitmap = drinks.get(position).drinkImage;

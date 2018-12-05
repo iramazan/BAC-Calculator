@@ -10,11 +10,12 @@ import java.util.Date;
 public class User {
     public enum Gender { MALE, FEMALE }
 
-    public User(String name, Date birthday, Gender gender) {
+    public User(String name, Date birthday, Gender gender, int weight) {
         this.uid = 0;
         this.name = name;
         this.birthday = birthday;
         this.gender = gender;
+        this.weight = weight;
     }
 
     @PrimaryKey(autoGenerate = true)
@@ -25,6 +26,9 @@ public class User {
 
     @ColumnInfo(name = "birthday")
     public Date birthday;
+
+    @ColumnInfo(name = "weight")
+    public int weight;
 
     @ColumnInfo(name = "gender")
     public Gender gender;
