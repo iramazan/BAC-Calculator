@@ -1,6 +1,12 @@
 package csc420.baccalculator;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,11 +30,15 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
         }
     }
 
-    public ContactsAdapter() {
-        // TODO: Load actual dataset
-        contacts.put("John Doe", "1234567");
-        contacts.put("Jane Doe", "7202710");
-        contacts.put("Will Smith", "0165882");
+    public ContactsAdapter(FragmentActivity activity) {
+        Cursor contacts = activity.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                null,null,null,null);
+        while (contacts.moveToNext()) {
+            String name = contacts.getString(contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+            String number = contacts.getString(contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            this.contacts.put(name, number);
+        }
+        contacts.close();
     }
 
     @NonNull

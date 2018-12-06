@@ -1,6 +1,10 @@
 package csc420.baccalculator;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -8,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements SettingsFragment.OnFragmentSelectionListener,
                                                                NewUserFragment.OnFragmentSelectionListener,
@@ -28,6 +33,17 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
         HomeFragment hf = new HomeFragment();
         ft.replace(R.id.frag_holder, hf);
         ft.commit();
+        // get runtime permissions
+        if (getApplicationContext().checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS)) {
+                    Toast.makeText(this, "Read contacts permission is required for driver functionality.",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_CONTACTS}, 1);
+                }
+            }
+        }
     }
 
     @Override
