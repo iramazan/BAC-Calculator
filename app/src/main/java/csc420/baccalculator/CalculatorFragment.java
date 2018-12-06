@@ -56,7 +56,7 @@ public class CalculatorFragment extends Fragment implements SelectFavoriteFragme
             editor.putString(getString(R.string.alcohol_consumed_key), Double.toString(totalGrams));
             User user = DatabaseManager.getInstance(getActivity().getApplicationContext())
                     .userDao().getUserById(sharedPref.getLong(getString(R.string.current_user_key), 0));
-            double bac = (totalGrams / (user.weight) * user.getConstant()) * 100;
+            double bac = (totalGrams / ((user.weight * 453.592) * user.getConstant())) * 100;
             editor.putString(getString(R.string.bac_key), Double.toString(bac));
             editor.commit();
         });
