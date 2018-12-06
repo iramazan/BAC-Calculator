@@ -29,7 +29,7 @@ public class SelectableImageAdapter extends BaseAdapter {
     private List<Drink> drinks;
     private ImageView selected = null;
     private int selectedPos;
-    ExecutorService executor = Executors.newSingleThreadExecutor();
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public SelectableImageAdapter(Context context, FragmentActivity activity, User user, OnDrinkSelectedListener parent) {
         this.context = context;

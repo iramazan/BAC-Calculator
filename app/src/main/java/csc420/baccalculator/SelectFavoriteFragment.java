@@ -25,7 +25,7 @@ import java.util.concurrent.Executors;
  */
 public class SelectFavoriteFragment extends Fragment implements SelectableImageAdapter.OnDrinkSelectedListener {
 
-    OnDrinkSelectionListener parent;
+    private OnDrinkSelectionListener parent;
 
     public SelectFavoriteFragment() {
         // Required empty public constructor

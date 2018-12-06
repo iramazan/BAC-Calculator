@@ -24,13 +24,12 @@ import java.util.concurrent.Executors;
  */
 public class CalculatorFragment extends Fragment implements SelectFavoriteFragment.OnDrinkSelectionListener {
 
+    private Drink selectedDrink;
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
+
     public CalculatorFragment() {
         // Required empty public constructor
     }
-
-    Drink selectedDrink;
-
-    ExecutorService executor = Executors.newSingleThreadExecutor();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,7 +47,7 @@ public class CalculatorFragment extends Fragment implements SelectFavoriteFragme
 
     private void calculateBAC() {
         executor.execute(() -> {
-            SharedPreferences sharedPref = getActivity().getSharedPreferences(
+            SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences(
                     getString(R.string.preference_file_key), Context.MODE_PRIVATE);
             double alcoholConsumed = Double.parseDouble(sharedPref.getString(getString(R.string.alcohol_consumed_key), "0"));
             Drink drink = selectedDrink;
@@ -59,6 +58,7 @@ public class CalculatorFragment extends Fragment implements SelectFavoriteFragme
                     .userDao().getUserById(sharedPref.getLong(getString(R.string.current_user_key), 0));
             double bac = (totalGrams / (user.weight) * user.getConstant()) * 100;
             editor.putString(getString(R.string.bac_key), Double.toString(bac));
+            editor.commit();
         });
     }
 

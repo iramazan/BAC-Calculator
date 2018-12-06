@@ -13,6 +13,7 @@
             android:textSize="32sp"
             android:text="Settings"/>
 
+    <!--
     <Button
             android:id="@+id/user_settings_button"
             android:layout_width="match_parent"
@@ -20,6 +21,7 @@
             android:layout_margin="5dp"
             android:background="@color/primaryFocus"
             android:text="Edit User" />
+    -->
 
     <Button
             android:id="@+id/new_user_button"
@@ -29,6 +31,14 @@
             android:background="@color/primaryFocus"
             android:text="Create New User" />
 
+    <Button android:id="@+id/reset_bac_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@color/primaryFocus"
+            android:text="Reset BAC" />
+
+    <!--
     <Button
             android:id="@+id/theme_settings_button"
             android:layout_width="match_parent"
@@ -52,5 +62,6 @@
             android:layout_margin="5dp"
             android:background="@color/primaryFocus"
             android:text="Terms of Service" />
+    -->
 
 </LinearLayout>
